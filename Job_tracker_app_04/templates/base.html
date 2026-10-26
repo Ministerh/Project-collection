@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Job Tracker{% endblock %}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; line-height: 1.5; }
+    nav { display: flex; gap: 1rem; align-items: center; padding: .75rem 1rem;
+          background: #f3f4f6; border-bottom: 1px solid #d1d5db; }
+    nav .spacer { flex: 1; }
+    nav form { display: inline; margin: 0; }
+    main { max-width: 640px; margin: 1.5rem auto; padding: 0 1rem; }
+    .errorlist { color: #b91c1c; padding-left: 1rem; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body>
+  <nav>
+    <strong>Job Tracker</strong>
+    <span class="spacer"></span>
+    {% if user.is_authenticated %}
+      <a href="{% url 'application_list' %}">My applications</a>
+      <a href="{% url 'dashboard' %}">Dashboard</a>
+      <span>Signed in as {{ user.username }}</span>
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+      </form>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+  </nav>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<p>You're tracking <strong>{{ total }}</strong> application{{ total|pluralize }}.</p>
+
+<h2>By status</h2>
+<ul>
+  {% for value, label, count in status_counts %}
+    <li><a href="{% url 'application_list' %}?status={{ value }}">{{ label }}</a>: {{ count }}</li>
+  {% endfor %}
+</ul>
+
+<h2>Recent activity</h2>
+<ul>
+  {% for a in recent %}
+    <li>
+      <a href="{% url 'job_detail' a.job.pk %}">{{ a.job.title }}</a>
+      — {{ a.get_status_display }}
+      ({{ a.updated_at|date:"Y-m-d" }})
+    </li>
+  {% empty %}
+    <li>Nothing yet. <a href="{% url 'job_list' %}">Browse jobs</a> to start tracking.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

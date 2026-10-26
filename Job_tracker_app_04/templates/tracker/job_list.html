@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Jobs{% endblock %}
+
+{% block content %}
+<h1>Jobs</h1>
+
+<form method="get">
+  <input type="text" name="q" placeholder="Title or company" value="{{ q }}">
+  <input type="text" name="location" placeholder="Location" value="{{ location }}">
+  <button type="submit">Search</button>
+</form>
+
+<p>{{ page_obj.paginator.count }} job{{ page_obj.paginator.count|pluralize }} found</p>
+
+<ul>
+  {% for job in page_obj %}
+    <li>
+      <strong><a href="{% url 'job_detail' job.pk %}">{{ job.title }}</a></strong> — {{ job.company }}<br><br>
+      {{ job.location }}{% if job.posted_date %} · {{ job.posted_date|date:"Y-m-d" }}{% endif %}
+    </li>
+  {% empty %}
+    <li>No jobs match your search.</li>
+  {% endfor %}
+</ul>
+
+{% if page_obj.paginator.num_pages > 1 %}
+<p>
+  {% if page_obj.has_previous %}
+    <a href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+  {% if page_obj.has_next %}
+    <a href="?{% if query_string %}{{ query_string }}&amp;{% endif %}page={{ page_obj.next_page_number }}">Next</a>
+  {% endif %}
+</p>
+{% endif %}
+{% endblock %}

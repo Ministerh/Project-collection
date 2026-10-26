@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}My applications{% endblock %}
+
+{% block content %}
+<h1>My applications</h1>
+
+<p>
+  <a href="{% url 'application_list' %}">{% if not status %}<strong>All</strong>{% else %}All{% endif %}</a>
+  {% for value, label in status_choices %}
+    | <a href="?status={{ value }}">{% if status == value %}<strong>{{ label }}</strong>{% else %}{{ label }}{% endif %}</a>
+  {% endfor %}
+</p>
+
+<div style="overflow-x: auto;">
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>Job</th><th>Company</th><th>Status</th><th>Applied</th><th>Updated</th><th></th>
+  </tr>
+  {% for a in applications %}
+  <tr>
+    <td><a href="{% url 'job_detail' a.job.pk %}">{{ a.job.title }}</a></td>
+    <td>{{ a.job.company }}</td>
+    <td>{{ a.get_status_display }}</td>
+    <td>{% if a.applied_date %}{{ a.applied_date|date:"Y-m-d" }}{% endif %}</td>
+    <td>{{ a.updated_at|date:"Y-m-d" }}</td>
+    <td>
+      <a href="{% url 'application_edit' a.pk %}">Edit</a>
+      <form method="post" action="{% url 'application_delete' a.pk %}"
+            style="display: inline;"
+            onsubmit="return confirm('Delete this application?')">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+      </form>
+    </td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="6">No applications yet. <a href="{% url 'job_list' %}">Browse jobs</a> to start tracking.</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+{% endblock %}

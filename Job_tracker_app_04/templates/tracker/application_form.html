@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Edit application{% endblock %}
+
+{% block content %}
+<h1>{{ application.job.title }}</h1>
+<p>{{ application.job.company }}</p>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Save</button>
+  <a href="{% url 'application_list' %}">Cancel</a>
+</form>
+{% endblock %}

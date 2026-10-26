@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ job.title }}{% endblock %}
+
+{% block content %}
+<p><a href="{% url 'job_list' %}">&larr; Back to jobs</a></p>
+
+<h1>{{ job.title }}</h1>
+<p>
+  <strong>{{ job.company }}</strong><br>
+  {% if job.location %}{{ job.location }}<br>{% endif %}
+  {% if job.posted_date %}Posted: {{ job.posted_date|date:"Y-m-d" }}<br>{% endif %}
+  <a href="{{ job.url }}" target="_blank" rel="noopener noreferrer">View original listing</a>
+</p>
+
+<hr>
+
+{% if user.is_authenticated %}
+  {% if application %}
+    <p>You're tracking this job. Status: <strong>{{ application.get_status_display }}</strong>
+  · <a href="{% url 'application_edit' application.pk %}">Edit tracking</a></p>
+    
+  {% else %}
+    <form method="post" action="{% url 'track_job' job.pk %}">
+      {% csrf_token %}
+      <button type="submit">Track this job</button>
+    </form>
+  {% endif %}
+{% else %}
+  <p><a href="{% url 'login' %}?next={{ request.path }}">Log in to track this job</a></p>
+{% endif %}
+{% endblock %}
