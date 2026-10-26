@@ -1,0 +1,35 @@
+{% extends 'expenses/base.html' %}
+
+{% block content %}
+<h1>Expenses</h1>
+<form method="get">
+    <input name="category" placeholder="filter by category" value="{{category|default:'' }}">
+    <button>Filter</button>
+</form>
+<table border="1" cellpadding="6" cellspacing="0">
+    <tr>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Amount</th>
+        <th>Description</th>
+    </tr>
+    {% for exp in expenses %}
+    <tr>
+        <td>{{ exp.date}}</td>
+        <td>{{ exp.category}}</td>
+        <td>{{ exp.amount}}</td>
+        <td>{{ exp.description}}</td>
+        <td>
+            <form method="post" action="{% url 'expense_delete' exp.pk %} " onsubmit="return confirm('Delete this expense')">
+                {% csrf_token %}
+                <button>Delete</button>
+
+            </form>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">No expenses found</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
