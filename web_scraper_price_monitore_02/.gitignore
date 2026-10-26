@@ -1,0 +1,8 @@
+venv/
+__pychache__.py
+.idea
+*pyc
+main.py
+payment_monitor.py
+whale_tracker.py
+prices.csv
