@@ -1,0 +1,12 @@
+timestamp,original,new
+2026-10-19T10:17:58,test_folder\backup.zip,test_folder\Archives\backup.zip
+2026-10-19T10:17:58,test_folder\clip.mp4,test_folder\Videos\clip.mp4
+2026-10-19T10:17:58,test_folder\noext,test_folder\Other\noext
+2026-10-19T10:17:58,test_folder\notes.txt,test_folder\Documents\notes.txt
+2026-10-19T10:17:58,test_folder\photo.jpg,test_folder\Images\photo.jpg
+2026-10-19T10:17:58,test_folder\PHOTO2.JPG,test_folder\Images\PHOTO2.JPG
+2026-10-19T10:17:58,test_folder\README,test_folder\Other\README
+2026-10-19T10:17:58,test_folder\report.pdf,test_folder\Documents\report.pdf
+2026-10-19T10:17:58,test_folder\script.py,test_folder\Code\script.py
+2026-10-19T10:17:58,test_folder\song.mp3,test_folder\Audio\song.mp3
+2026-10-19T10:19:21,test_folder\photo.jpg,test_folder\Images\photo (1).jpg
